@@ -50,6 +50,10 @@ st.set_page_config(page_title="2D falling plate ODE", layout="wide")
 st.title("Two-dimensional freely-falling plate ODE (Li *et al.*)")
 st.write("Code hosted at https://github.com/ckessler2/Plate_Model_Site")
 
+st.set_page_config(
+    initial_sidebar_state="collapsed"t
+)
+
 st.markdown(
     """
     <style>
