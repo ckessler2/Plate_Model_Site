@@ -48,6 +48,7 @@ def downsample_for_plot(x, y, max_points=20000):
 # ----------------------------
 st.set_page_config(page_title="2D falling plate ODE", layout="wide")
 st.title("Two-dimensional freely-falling plate ODE (Li *et al.*)")
+st.write("Code hosted at https://github.com/ckessler2/Plate_Model_Site")
 
 st.markdown(
     """
@@ -81,6 +82,8 @@ st.markdown(
         section[data-testid="stSidebar"] > div:first-child {
             display: flex;
             flex-direction: column;
+            width: 600px !important;
+            min-width: 500px !important;
         }
         
         div[data-testid="stSidebarUserContent"] {
@@ -210,7 +213,8 @@ if run:
     n_steps = int(np.floor(t_end / dt))
     t_eval = np.arange(0.0, (n_steps + 1) * dt, dt, dtype=float)
 
-    st.write(f"Evaluating for **{len(t_eval):,}** time points.")
+    # st.write(f"Evaluating for **{len(t_eval):,}** time points.")
+    
 
     with st.spinner("Integrating ..."):
         sol = solve_ivp(
@@ -263,7 +267,7 @@ if run:
         fig.update_layout(
             xaxis_title="</i>x</i>",
             yaxis_title="</i>y</i>",
-            height=650,title=dict(text=""), 
+            height=600,title=dict(text=""), 
             margin=dict(l=40, r=20, t=40, b=40),
             font=dict(family="Times New Roman, Times, serif",color="black"),
             paper_bgcolor="white",
@@ -322,7 +326,7 @@ if run:
         fig3d.update_layout(
             xaxis_title="</i>x</i>",
             yaxis_title="</i>y</i>",
-            height=650,title=dict(text=""), 
+            height=600,title=dict(text=""), 
             margin=dict(l=40, r=20, t=40, b=40),
             font=dict(family="Times New Roman, Times, serif",color="black"),
             paper_bgcolor="white",
@@ -343,7 +347,7 @@ if run:
     fig2.add_trace(go.Scatter(x=sol.t, y=v_yp,  mode="lines", name="<i>v</i><sub>y′</sub>"))
     fig2.add_trace(go.Scatter(x=sol.t, y=omega, mode="lines", name="ω"))
     fig2.add_trace(go.Scatter(x=sol.t, y=theta, mode="lines", name="θ"))
-    fig2.update_layout(xaxis_title="<i>t</i>", yaxis_title="<i>v</i><sub>x′</sub>, <i>v</i><sub>y′</sub>, ω, θ", height=450,
+    fig2.update_layout(xaxis_title="<i>t</i>", yaxis_title="<i>v</i><sub>x′</sub>, <i>v</i><sub>y′</sub>, ω, θ", height=400,
     font=dict(family="Times New Roman, Times, serif",color="black"),
     paper_bgcolor="white",title=dict(text=""), 
     plot_bgcolor="white",
@@ -357,6 +361,7 @@ if run:
         tickfont=dict(color="black"),
         title_font=dict(color="black"),
         tickcolor="black",
+        hoverformat=".4f",
     )
     fig2.update_yaxes( dtick=1, constrain="domain", 
         tickfont=dict(color="black"),
@@ -364,6 +369,7 @@ if run:
         tickcolor="black",tickmode="linear",
         tick0=0,
         tickformat=".0f",   # show as integers
+        hoverformat=".4f",
         showticklabels=True,
         ticks="outside",
     )
@@ -373,17 +379,25 @@ if run:
     st.plotly_chart(apply_font(fig2), use_container_width=True)
 
 
-    st.subheader("Final state")
-    st.write(
-        {
-            "t_end": float(sol.t[-1]),
-            "v_xp": float(v_xp[-1]),
-            "v_yp": float(v_yp[-1]),
-            "omega": float(omega[-1]),
-            "theta": float(theta[-1]),
-            "x": float(x_pos[-1]),
-            "y": float(y_pos[-1]),
-        }
-    )
+    with st.expander("Final state", expanded=False):
+        st.write(
+            {
+                "t_end": float(sol.t[-1]),
+                "v_xp": float(v_xp[-1]),
+                "v_yp": float(v_yp[-1]),
+                "omega": float(omega[-1]),
+                "theta": float(theta[-1]),
+                "x": float(x_pos[-1]),
+                "y": float(y_pos[-1]),
+            }
+        )
+    
+    with st.expander("ODE source", expanded=False):
+        with open("plate_ode.py", "r") as f:
+            st.code(f.read(), language="python")
+    with st.expander("Page source", expanded=False):
+        with open("app.py", "r", encoding="utf-8") as f:
+            st.code(f.read(), language="python")
+    
 else:
     st.info("Set parameters in the sidebar, then click **Run ODE and plot**.")
