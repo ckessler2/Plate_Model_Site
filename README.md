@@ -1,1 +1,1 @@
-Li et al simulation site, to be deployed with Streamlit Community Cloud
+Li et al simulation site, deployed here: https://fallingplate.streamlit.app/
