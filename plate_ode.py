@@ -13,9 +13,6 @@ def nondim_freely_falling_plate(t, y, p, opt):
     v_xp, v_yp, omega, theta, x_pos, y_pos = y
     l, m, rho_f, a, b, s = p
 
-    # Derived quantities
-    rho_s = m / (np.pi * a * b)
-
     C_L1 = opt[0]
     C_L2 = opt[1]
     C_D0 = opt[2]
@@ -26,9 +23,11 @@ def nondim_freely_falling_plate(t, y, p, opt):
     C_2_CP = opt[7]
     C_R = opt[8]
     e_x = opt[9]
-
+    
+    # Derived quantities
+    rho_s = m / (np.pi * a * b)
+    Inertia = (m * (a**2 + b**2) / (rho_f * l**4)) + 1.0 / 32.0 + e_x**2
     l_CM = e_x * l
-
     m_prime = 4.0 * m / (np.pi * rho_f * l * l * s)
     gamma = rho_f / (rho_s - rho_f)
 
@@ -36,6 +35,7 @@ def nondim_freely_falling_plate(t, y, p, opt):
 
     alpha0 = np.deg2rad(14.0)
     delta = np.deg2rad(6.0)
+
 
     # Activation functions
     Falpha1 = (1.0 - np.tanh((np.pi - np.abs(alpha) - alpha0) / delta)) / 2.0
@@ -126,8 +126,6 @@ def nondim_freely_falling_plate(t, y, p, opt):
         plus_minus = e_xplus + e_xminus
     else:
         plus_minus = e_xplus - e_xminus
-
-    Inertia = (m * (a**2 + b**2) / (rho_f * l**4)) + 1.0 / 32.0 + e_x**2
 
     domegadt = (
         (-(C_D_pi_2 / (32.0 * np.pi)) * omega * np.abs(omega) * plus_minus)
