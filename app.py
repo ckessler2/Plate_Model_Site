@@ -119,7 +119,7 @@ with st.sidebar:
     top[0].header("Constants")
     c = st.columns(6)
     c[0].markdown("<i>l</i>", unsafe_allow_html=True);     l     = c[0].number_input("l",     value=0.07,     format="%.8g", key="l",     label_visibility="collapsed")
-    c[1].markdown("<i>m</i>", unsafe_allow_html=True);     m     = c[1].number_input("m",     value=0.36e-3,  format="%.8g", key="m",     label_visibility="collapsed")
+    c[1].markdown("<i>m</i>", unsafe_allow_html=True);     m     = c[1].number_input("m",     value=0.3175e-3,  format="%.8g", key="m",     label_visibility="collapsed")
     c[2].markdown("ρ<sub>f</sub>", unsafe_allow_html=True); rho_f = c[2].number_input("rho_f", value=1.225,   format="%.8g", key="rho_f", label_visibility="collapsed")
     c[3].markdown("<i>a</i>", unsafe_allow_html=True);     a     = c[3].number_input("a",     value=0.03375,  format="%.8g", key="a",     label_visibility="collapsed")
     c[4].markdown("<i>b</i>", unsafe_allow_html=True);     b     = c[4].number_input("b",     value=0.5e-3,   format="%.8g", key="b",     label_visibility="collapsed")
